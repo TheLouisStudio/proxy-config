@@ -1,6 +1,7 @@
-name: Ultimate Anti-DNS-Leak
-desc: 彻底切断 iOS 运营商与校园网 DNS 泄漏
+name: Anti-DNS-Leak (Shadowrocket Logic Rules)
+desc: 参照 Shadowrocket 规则重构的 Stash 防泄漏覆写配置
 
+# 1. Stash 核心防泄漏 DNS 配置
 dns:
   enable: true
   ipv6: false
@@ -8,21 +9,42 @@ dns:
   fake-ip-range: 198.18.0.1/16
   listen: 0.0.0.0:53
   
+  # 引导 DNS (纯 IP，禁止填入域名)
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
 
+  # 主 DNS：全量加密 DoH
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
 
+  # 清空回退 DNS
   fallback: []
 
+# 2. 转换后的防泄漏核心规则链
 rules:
+  # 拦截明文与加密 DNS 绕过（强制走代理或 Fake-IP）
   - PORT,53,REJECT
   - PROTOCOL,UDP,PORT,53,REJECT
+  - PORT,853,REJECT
+
+  # 拦截苹果 Private Relay 引起的 DNS 旁路泄漏
+  - DOMAIN,mask.icloud.com,REJECT
+  - DOMAIN,mask-h2.icloud.com,REJECT
+  - DOMAIN,mask-api.fe.apple-dns.net,REJECT
+
+  # 拦截常见公共 DNS 节点的直连 (带 no-resolve 避免触发二次 DNS 解析)
+  - IP-CIDR,1.1.1.1/32,REJECT,no-resolve
+  - IP-CIDR,1.0.0.1/32,REJECT,no-resolve
+  - IP-CIDR,8.8.8.8/32,REJECT,no-resolve
+  - IP-CIDR,8.8.4.4/32,REJECT,no-resolve
+  - IP-CIDR,9.9.9.9/32,REJECT,no-resolve
+  - IP-CIDR,114.114.114.114/32,REJECT,no-resolve
+  - IP-CIDR,223.5.5.5/32,REJECT,no-resolve
+
+  # 拦截 WebRTC / STUN / TURN 泄露真实 IP
   - PORT,3478,REJECT
   - DOMAIN-KEYWORD,stun,REJECT
   - DOMAIN-KEYWORD,turn,REJECT
-  - DOMAIN,mask.icloud.com,REJECT
-  - DOMAIN,mask-h2.icloud.com,REJECT
+  - DOMAIN-SUFFIX,stunprotocol.org,REJECT
