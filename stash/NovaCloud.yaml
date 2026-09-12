@@ -1,0 +1,23 @@
+name: DNS & WebRTC Zero Leak
+desc: 彻底阻止 iOS Stash 的 DNS 与 WebRTC 泄漏
+
+# DNS 零泄漏覆写
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback: []
+
+# 封锁 WebRTC STUN 探测规则
+rules:
+  - DST-PORT,3478,REJECT
+  - DOMAIN-KEYWORD,stun,REJECT
+  - DOMAIN-KEYWORD,turn,REJECT
+  - DOMAIN-SUFFIX,stunprotocol.org,REJECT
