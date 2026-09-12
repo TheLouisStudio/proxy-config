@@ -1,5 +1,5 @@
 name: Stash Anti-Leak (Converted from Verge Script)
-desc: 完美移植 Clash Verge 脚本的防泄漏与分流逻辑
+desc: 完美移植 Clash Verge 脚本的防泄漏与分流逻辑 (Stash 语法适配版)
 
 # 1. 完全对应脚本中的 dnsConfig
 dns:
@@ -17,13 +17,13 @@ dns:
     - 223.5.5.5
     - 1.2.4.8
 
-  # 对应 foreignNameservers (海外 DoH，彻底接管全局)
+  # 对应 foreignNameservers (海外 DoH)
   nameserver:
     - https://1.1.1.1/dns-query
     - https://8.8.4.4/dns-query
     - https://208.67.222.222/dns-query
 
-  # 对应 proxy-server-nameserver (解析代理节点域名专用的国内 DoH)
+  # 对应 proxy-server-nameserver (解析节点专用的国内 DoH)
   proxy-server-nameserver:
     - https://223.5.5.5/dns-query
     - https://doh.pub/dns-query
@@ -33,13 +33,11 @@ dns:
     - https://223.5.5.5/dns-query
     - https://doh.pub/dns-query
 
-  # 对应 nameserver-policy
+  # 对应 nameserver-policy（修复重点：Stash 要求必须是逗号分隔的字符串）
   nameserver-policy:
-    "geosite:private,cn":
-      - https://223.5.5.5/dns-query
-      - https://doh.pub/dns-query
+    "geosite:private,cn": "https://223.5.5.5/dns-query, https://doh.pub/dns-query"
 
-  # 对应 fake-ip-filter (防止特定服务因为 Fake-IP 异常)
+  # 对应 fake-ip-filter
   fake-ip-filter:
     - "+.lan"
     - "+.local"
@@ -54,7 +52,7 @@ dns:
     - "pool.ntp.org"
     - "localhost.work.weixin.qq.com"
 
-# 2. 补齐拦截硬干绕过 DNS 泄漏的核心防护
+# 2. 防泄漏硬拦截规则
 rules:
   - PORT,53,REJECT
   - PROTOCOL,UDP,PORT,53,REJECT
