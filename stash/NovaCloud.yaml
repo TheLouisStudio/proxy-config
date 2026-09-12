@@ -1,52 +1,64 @@
-name: Ultimate Strict Anti-DNS-Leak
-desc: 强制全量代理接管 DNS 与拦截旁路
+name: Stash Anti-Leak (Converted from Verge Script)
+desc: 完美移植 Clash Verge 脚本的防泄漏与分流逻辑
 
-# 1. 强制覆盖 Stash 系统全局 DNS 行为
+# 1. 完全对应脚本中的 dnsConfig
 dns:
   enable: true
-  ipv6: false                           # 禁用 IPv6 解析，防止 IPv6 旁路泄漏
+  ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  listen: 0.0.0.0:53
-  respect-rules: true                   # 强制 DNS 查询遵循分流规则
-
-  # 引导 DNS (仅用于解析节点的域名，严格只保留 IP)
+  listen: 0.0.0.0:1053
+  respect-rules: true
+  use-system-hosts: false
+  cache-algorithm: arc
+  
+  # 对应 default-nameserver
   default-nameserver:
     - 223.5.5.5
-    - 119.29.29.29
+    - 1.2.4.8
 
-  # 主 DNS：全量加密 DoH (避免任何明文 UDP 53)
+  # 对应 foreignNameservers (海外 DoH，彻底接管全局)
   nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+    - https://1.1.1.1/dns-query
+    - https://8.8.4.4/dns-query
+    - https://208.67.222.222/dns-query
 
-  # 强行指定代理节点的 DNS 解析器 (防止节点域名解析走本地 ISP)
+  # 对应 proxy-server-nameserver (解析代理节点域名专用的国内 DoH)
   proxy-server-nameserver:
-    - 223.5.5.5
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
 
-  # 清空 fallback，禁止任何向国外/本地 DNS 的回退并发查询
-  fallback: []
+  # 对应 direct-nameserver (直连域名解析 DoH)
+  direct-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
 
-# 2. 封堵所有旁路泄露的规则
+  # 对应 nameserver-policy
+  nameserver-policy:
+    "geosite:private,cn":
+      - https://223.5.5.5/dns-query
+      - https://doh.pub/dns-query
+
+  # 对应 fake-ip-filter (防止特定服务因为 Fake-IP 异常)
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "localhost.ptlogin2.qq.com"
+    - "localhost.sec.qq.com"
+    - "+.in-addr.arpa"
+    - "+.ip6.arpa"
+    - "time.*.com"
+    - "time.*.gov"
+    - "pool.ntp.org"
+    - "localhost.work.weixin.qq.com"
+
+# 2. 补齐拦截硬干绕过 DNS 泄漏的核心防护
 rules:
-  # 拦截明文与加密 DNS 直连
   - PORT,53,REJECT
   - PROTOCOL,UDP,PORT,53,REJECT
   - PORT,853,REJECT
-
-  # 拦截 Apple 强制旁路与私密代理
   - DOMAIN,mask.icloud.com,REJECT
   - DOMAIN,mask-h2.icloud.com,REJECT
   - DOMAIN,mask-api.fe.apple-dns.net,REJECT
-  - DOMAIN-SUFFIX,apple-dns.net,REJECT
-
-  # 拦截公共 DNS 直连
-  - IP-CIDR,1.1.1.1/32,REJECT,no-resolve
-  - IP-CIDR,8.8.8.8/32,REJECT,no-resolve
-  - IP-CIDR,114.114.114.114/32,REJECT,no-resolve
-  - IP-CIDR,223.5.5.5/32,REJECT,no-resolve
-
-  # 拦截 STUN / WebRTC
-  - PORT,3478,REJECT
-  - DOMAIN-KEYWORD,stun,REJECT
-  - DOMAIN-KEYWORD,turn,REJECT
