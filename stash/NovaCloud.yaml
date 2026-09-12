@@ -1,7 +1,7 @@
 name: Stash Anti-Leak (Converted from Verge Script)
-desc: 完美移植 Clash Verge 脚本的防泄漏与分流逻辑 (Stash 语法适配版)
+desc: 完美移植 Clash Verge 脚本的防泄漏与分流逻辑 (Stash Override 兼容版)
 
-# 1. 完全对应脚本中的 dnsConfig
+# 1. 对应 Verge 脚本中的全局 DNS 配置
 dns:
   enable: true
   ipv6: false
@@ -11,33 +11,24 @@ dns:
   respect-rules: true
   use-system-hosts: false
   cache-algorithm: arc
-  
-  # 对应 default-nameserver
+
   default-nameserver:
     - 223.5.5.5
     - 1.2.4.8
 
-  # 对应 foreignNameservers (海外 DoH)
   nameserver:
     - https://1.1.1.1/dns-query
     - https://8.8.4.4/dns-query
     - https://208.67.222.222/dns-query
 
-  # 对应 proxy-server-nameserver (解析节点专用的国内 DoH)
   proxy-server-nameserver:
     - https://223.5.5.5/dns-query
     - https://doh.pub/dns-query
 
-  # 对应 direct-nameserver (直连域名解析 DoH)
   direct-nameserver:
     - https://223.5.5.5/dns-query
     - https://doh.pub/dns-query
 
-  # 对应 nameserver-policy（修复重点：Stash 要求必须是逗号分隔的字符串）
-  nameserver-policy:
-    "geosite:private,cn": "https://223.5.5.5/dns-query, https://doh.pub/dns-query"
-
-  # 对应 fake-ip-filter
   fake-ip-filter:
     - "+.lan"
     - "+.local"
@@ -52,7 +43,11 @@ dns:
     - "pool.ntp.org"
     - "localhost.work.weixin.qq.com"
 
-# 2. 防泄漏硬拦截规则
+# 2. 彻底解决报错的重点：Stash 重写脚本中 nameserver-policy 须写在根路径或独立的单行字符串映射中
+nameserver-policy:
+  "geosite:private,cn": "https://223.5.5.5/dns-query, https://doh.pub/dns-query"
+
+# 3. 防泄漏硬拦截规则 (插入到预设规则前)
 rules:
   - PORT,53,REJECT
   - PROTOCOL,UDP,PORT,53,REJECT
