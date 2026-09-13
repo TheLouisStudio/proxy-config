@@ -40,7 +40,7 @@ const dnsConfig = {
     // 微信快速登录检测失败
     "localhost.work.weixin.qq.com"
   ],
-  "default-nameserver": ["223.5.5.5","1.2.4.8"],//可修改成自己ISP的DNS
+  "default-nameserver": ["223.5.5.5","119.29.29.29"],//可修改成自己ISP的DNS
   "nameserver": [...foreignNameservers],
   "proxy-server-nameserver":[...domesticNameservers],
   "direct-nameserver":[...domesticNameservers],
@@ -61,6 +61,12 @@ const ruleProviders = {
     "behavior": "domain",
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
     "path": "./ruleset/loyalsoldier/reject.yaml"
+  },
+  "novacloud": {
+    ...ruleProviderCommon,
+    "behavior": "classical",
+    "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novacloud.txt",
+    "path": "./ruleset/custom/novacloud.yaml"
   },
   "icloud": {
     ...ruleProviderCommon,
@@ -191,11 +197,14 @@ const rules = [
   "DOMAIN-SUFFIX,gstatic.com,谷歌服务", // Google静态资源
   "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,谷歌服务", // Google Play下载服务
   "DOMAIN-SUFFIX,github.io,节点选择", // Github Pages
+  "DOMAIN-SUFFIX,github.com,节点选择", // Github Pages
+  "DOMAIN-SUFFIX,githubusercontent.com,节点选择", // Github Pages
   "DOMAIN,v2rayse.com,节点选择", // V2rayse节点工具
   // Loyalsoldier 规则集
   "RULE-SET,applications,全局直连",
   "RULE-SET,private,全局直连",
   "RULE-SET,reject,广告过滤",
+  "RULE-SET,novacloud,节点选择",
   "RULE-SET,Microsoft,微软服务",
   "RULE-SET,icloud,iCloud服务",
   "RULE-SET,apple,苹果服务",
