@@ -1,4 +1,6 @@
 payload:
-  - DOMAIN-KEYWORD,-bahpqcq-
-  - DOMAIN-KEYWORD,bahpqcq.com
-  - DOMAIN-SUFFIX,baidujs.cnys.com
+  - '+.0.avmarket.rs'
+  - '+.0.myikas.com'
+  - '+.0.net.easyjet.com'
+  - '+.0.nextyourcontent.com'
+  - '+.00000.uno'
