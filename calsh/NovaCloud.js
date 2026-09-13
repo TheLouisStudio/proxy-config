@@ -1,3 +1,4 @@
+// 全局扩展脚本
 // 国内DNS服务器
 const domesticNameservers = [
   "https://223.5.5.5/dns-query", // 阿里DoH
@@ -218,6 +219,7 @@ const rules = [
   "DOMAIN,v2rayse.com,节点选择", // V2rayse节点工具
   "DOMAIN-SUFFIX,qq.com,全局直连",
   "DOMAIN-SUFFIX,douyin.com,全局直连",
+  "DOMAIN-SUFFIX,bilibili.com,全局直连",
   // upstream 规则集
   "RULE-SET,novaclouddirect,全局直连",
   "RULE-SET,applications,全局直连",
