@@ -210,8 +210,14 @@ const rules = [
   "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,谷歌服务", // Google Play下载服务
   "DOMAIN-SUFFIX,github.io,节点选择", // Github Pages
   "DOMAIN-SUFFIX,github.com,节点选择", // Github Pages
+  "DOMAIN-SUFFIX,githubusercontent.com,节点选择",
+  "DOMAIN-SUFFIX,githubassets.com,节点选择",
+  "DOMAIN-SUFFIX,raw.githubusercontent.com,节点选择",
+  "DOMAIN-SUFFIX,objects.githubusercontent.com,节点选择",
   "DOMAIN-SUFFIX,githubusercontent.com,节点选择", // Github Pages
   "DOMAIN,v2rayse.com,节点选择", // V2rayse节点工具
+  "DOMAIN-SUFFIX,qq.com,全局直连",
+  "DOMAIN-SUFFIX,douyin.com,全局直连",
   // upstream 规则集
   "RULE-SET,novaclouddirect,全局直连",
   "RULE-SET,applications,全局直连",
