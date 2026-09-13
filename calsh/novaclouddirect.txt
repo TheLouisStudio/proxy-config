@@ -1,3 +1,6 @@
 payload:
-  - DOMAIN-SUFFIX,a.baidu.cn
-  - DOMAIN-SUFFIX,a.baidu.com
+  - DOMAIN-KEYWORD,-2mdn-
+  - DOMAIN-KEYWORD,2mdn.net
+  - DOMAIN-SUFFIX,doubleclick.net
+  - DOMAIN-SUFFIX,aod.itunes.apple.com
+  - DOMAIN-SUFFIX,api-edge.apps.apple.com
