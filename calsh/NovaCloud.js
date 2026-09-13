@@ -62,11 +62,11 @@ const ruleProviders = {
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
     "path": "./ruleset/upstream/reject.yaml"
   },
-  "novacloud": {
+  "novacloudreject": {
     ...ruleProviderCommon,
     "behavior": "classical",
-    "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novacloud.txt",
-    "path": "./ruleset/custom/novacloud.yaml"
+    "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novacloudreject.txt",
+    "path": "./ruleset/custom/novacloudreject.yaml"
   },
   "icloud": {
     ...ruleProviderCommon,
@@ -86,11 +86,23 @@ const ruleProviders = {
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt",
     "path": "./ruleset/upstream/google.yaml"
   },
+  "novacloud": {
+    ...ruleProviderCommon,
+    "behavior": "classical",
+    "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novacloud.txt",
+    "path": "./ruleset/custom/novacloud.yaml"
+  },
   "proxy": {
     ...ruleProviderCommon,
     "behavior": "domain",
     "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt",
     "path": "./ruleset/upstream/proxy.yaml"
+  },
+  "novaclouddirect": {
+    ...ruleProviderCommon,
+    "behavior": "classical",
+    "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novaclouddirect.txt",
+    "path": "./ruleset/custom/novaclouddirect.yaml"
   },
   "direct": {
     ...ruleProviderCommon,
@@ -201,9 +213,11 @@ const rules = [
   "DOMAIN-SUFFIX,githubusercontent.com,节点选择", // Github Pages
   "DOMAIN,v2rayse.com,节点选择", // V2rayse节点工具
   // upstream 规则集
+  "RULE-SET,novaclouddirect,全局直连",
   "RULE-SET,applications,全局直连",
   "RULE-SET,private,全局直连",
   "RULE-SET,reject,广告过滤",
+  "RULE-SET,novacloudreject,广告过滤",
   "RULE-SET,novacloud,节点选择",
   "RULE-SET,Microsoft,微软服务",
   "RULE-SET,icloud,iCloud服务",
