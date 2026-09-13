@@ -64,7 +64,7 @@ const ruleProviders = {
   },
   "novacloudreject": {
     ...ruleProviderCommon,
-    "behavior": "classical",
+    "behavior": "domain",
     "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novacloudreject.txt",
     "path": "./ruleset/custom/novacloudreject.yaml"
   },
@@ -100,7 +100,7 @@ const ruleProviders = {
   },
   "novaclouddirect": {
     ...ruleProviderCommon,
-    "behavior": "classical",
+    "behavior": "domain",
     "url": "https://raw.githubusercontent.com/TheLouisStudio/proxy-config/refs/heads/main/calsh/novaclouddirect.txt",
     "path": "./ruleset/custom/novaclouddirect.yaml"
   },
