@@ -1,1 +1,4 @@
-
+payload:
+  - DOMAIN-KEYWORD,-bahpqcq-
+  - DOMAIN-KEYWORD,bahpqcq.com
+  - DOMAIN-SUFFIX,baidujs.cnys.com
