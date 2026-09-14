@@ -449,7 +449,7 @@ function main(config) {
       "interval":120,
       "tolerance": 200,
       "include-all": true,
-      "filter": "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$",
+      "filter": "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|TaiWan|Taiwan)).*$",
        "icon": "https://fastly.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/tw.svg",
     },
     {
