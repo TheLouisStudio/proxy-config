@@ -2,6 +2,7 @@
 // 国内DNS服务器
 const domesticNameservers = [
   "https://223.5.5.5/dns-query", // 阿里DoH
+  "https://dns.alidns.com/dns-query", // 阿里DoH
   "https://doh.pub/dns-query" // 腾讯DoH
 ];
 // 国外DNS服务器
@@ -9,7 +10,7 @@ const foreignNameservers = [
   "https://1.1.1.1/dns-query", // CloudflareDNS
   "https://8.8.4.4/dns-query", // GoogleDNS
   "https://208.67.222.222/dns-query", // OpenDNS
-
+  "https://208.67.222.222/dns-query" // OpenDNS
 ];
 // DNS配置
 const dnsConfig = {
