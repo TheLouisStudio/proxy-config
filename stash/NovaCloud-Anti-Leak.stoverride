@@ -4,7 +4,7 @@ desc: Stash DNS test - replace normal DNS with encrypted foreign DNS
 dns:
   # 完全替换订阅原有的普通 DNS
   nameserver: #!replace
-    - https://223.5.5.5/dns-query
+    - https://1.0.0.2/dns-query
     - https://9.9.9.9/dns-query
 
   # 完全替换代理节点域名解析 DNS
