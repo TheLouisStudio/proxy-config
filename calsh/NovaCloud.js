@@ -8,9 +8,9 @@ const domesticNameservers = [
 // 国外DNS服务器
 const foreignNameservers = [
   "https://1.1.1.1/dns-query", // CloudflareDNS
-  "https://8.8.4.4/dns-query", // GoogleDNS
+  "https://8.8.8.8/dns-query", // GoogleDNS
   "https://208.67.222.222/dns-query", // OpenDNS
-  "https://dns.adguard-dns.com/dns-query" // AdGuardDNS
+  "https://9.9.9.9/dns-query" // Quad9 恶意域名过滤
 ];
 // DNS配置
 const dnsConfig = {
