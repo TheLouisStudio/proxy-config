@@ -10,9 +10,9 @@ dns:
   # 完全替换代理节点域名解析 DNS
   proxy-server-nameserver: #!replace
     - https://1.1.1.1/dns-query
-    - https://9.9.9.9/dns-query
+    - https://8.8.8.8/dns-query
 
   # 完全替换 Bootstrap DNS
   default-nameserver: #!replace
     - 1.1.1.1
-    - 9.9.9.9
+    - 8.8.8.8
