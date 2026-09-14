@@ -10,7 +10,6 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
 
-  # Use separate DNS servers for specific domain names
   nameserver-policy:
     'www.baidu.com': 114.114.114.114
     '+.internal.crop.com': system
