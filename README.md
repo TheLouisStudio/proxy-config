@@ -1,2 +1,1 @@
-# proxy-config
-Personal Shadowrocket clash configuration
+Personal net rules configuration
