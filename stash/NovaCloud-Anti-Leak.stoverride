@@ -1,140 +1,18 @@
-#!name=NovaCloud Stash DNS Anti-Leak V1
-#!desc=NovaCloud 第一阶段 DNS 防泄漏：强制 Stash DNS 接管、DoH、Fallback DNS、禁用 IPv6，暂不处理 WebRTC
-
-# =========================
-# IPv6
-# =========================
-
-ipv6: false
-
-
-# =========================
-# DNS
-# =========================
+name: NovaCloud DNS Anti-Leak V2
+desc: Stash DNS test - replace normal DNS with encrypted foreign DNS
 
 dns:
-  enable: true
-
-  # Stash DNS 本地监听
-  listen: 0.0.0.0:1053
-
-  # 禁用 IPv6 DNS 查询
-  ipv6: false
-
-  # Fake-IP
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-
-  # 不使用系统 Hosts
-  use-hosts: false
-  use-system-hosts: false
-
-  # 遵守 Stash/配置中的规则
-  respect-rules: true
-
-  # =========================
-  # Bootstrap DNS
-  # =========================
-  #
-  # 仅用于解析 DNS 服务本身需要的域名。
-  # 正常业务 DNS 不走这里。
-  #
-  default-nameserver:
-    - 1.1.1.1
-    - 9.9.9.9
-
-
-  # =========================
-  # 主 DNS
-  # =========================
-  #
-  # 正常 DNS 查询使用加密 DNS。
-  # 这里暂时不使用国内 DNS，
-  # 目的是第一阶段先验证是否存在运营商 DNS 绕过。
-  #
-  nameserver:
+  # 完全替换订阅原有的普通 DNS
+  nameserver: #!replace
     - https://1.1.1.1/dns-query
     - https://9.9.9.9/dns-query
 
+  # 完全替换代理节点域名解析 DNS
+  proxy-server-nameserver: #!replace
+    - https://1.1.1.1/dns-query
+    - https://9.9.9.9/dns-query
 
-  # =========================
-  # Fallback DNS
-  # =========================
-  #
-  # 主 DNS 无法正常解析时使用。
-  # 同样使用国外加密 DNS。
-  #
-  fallback:
-    - https://1.0.0.2/dns-query
-
-
-  # =========================
-  # Fallback 判断
-  # =========================
-  #
-  # 防止异常/污染解析结果。
-  #
-  fallback-filter:
-    geoip: true
-
-    ipcidr:
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-      - 100.64.0.0/10
-      - 127.0.0.0/8
-      - 169.254.0.0/16
-      - 172.16.0.0/12
-      - 192.0.0.0/24
-      - 192.0.2.0/24
-      - 192.88.99.0/24
-      - 192.168.0.0/16
-      - 198.18.0.0/15
-      - 198.51.100.0/24
-      - 203.0.113.0/24
-      - 224.0.0.0/4
-      - 240.0.0.0/4
-      - 255.255.255.255/32
-
-
-  # =========================
-  # Fake-IP 排除
-  # =========================
-  #
-  # 以下服务需要真实 IP，
-  # 避免 Fake-IP 对系统服务造成兼容性问题。
-  #
-  fake-ip-filter:
-    - "*.lan"
-    - "+.local"
-    - "+.localhost"
-    - "+.home.arpa"
-
-    - "localhost.ptlogin2.qq.com"
-    - "localhost.sec.qq.com"
-
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-
-    - "captive.apple.com"
-
-    - "time.*.com"
-    - "time.*.gov"
-    - "time.*.edu.cn"
-    - "time.*.apple.com"
-
-    - "pool.ntp.org"
-
-    # STUN / WebRTC
-    - "+.stun.*.*"
-    - "+.stun.*.*.*"
-    - "+.stun.*.*.*.*"
-
-    # PlayStation
-    - "+.stun.playstation.net"
-
-    # Nintendo
-    - "*.n.n.srv.nintendo.net"
-
-    # Xbox
-    - "*.*.xboxlive.com"
-    - "xbox.*.*.microsoft.com"
+  # 完全替换 Bootstrap DNS
+  default-nameserver: #!replace
+    - 1.1.1.1
+    - 9.9.9.9
