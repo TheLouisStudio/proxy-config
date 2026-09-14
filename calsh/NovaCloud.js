@@ -2,7 +2,7 @@
 // 国内DNS服务器
 const domesticNameservers = [
   "https://223.5.5.5/dns-query", // 阿里DoH
-  "https://dns.alidns.com/dns-query", // 阿里DoH
+  "https://223.6.6.6/dns-query", // 阿里DoH
   "https://doh.pub/dns-query" // 腾讯DoH
 ];
 // 国外DNS服务器
